@@ -35,6 +35,17 @@
   }],
   "included": [{
     "type": "people",
+    "id": "2",
+    "attributes": {
+      "first-name": "Aaron",
+      "last-name": "Bullard",
+      "twitter": "jab"
+    },
+    "links": {
+      "self": "http://example.com/people/2"
+    }
+  }, {
+    "type": "people",
     "id": "9",
     "attributes": {
       "first-name": "Dan",

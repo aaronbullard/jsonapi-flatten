@@ -1,63 +1,37 @@
-const JsonAPI = {};
+const ResourceObject = require('./ResourceObject.js');
+const Included = require('./Included.js');
 
-JsonAPI.flattenAttributes = function(object) {
-    return Object.assign({id: object.id}, object.attributes);
-}
+function JsonApi(obj) {
 
-JsonAPI.appendAttributesToRelationship = function(relationship, includes){
-    let attributes = this.findIncluded(includes, relationship.type, relationship.id).attributes;
+  this._jsonapi = obj;
 
-    relationship.attributes = attributes;
+  this.getDataAsResourceObjects = function() {
+    let data = this._jsonapi.data;
 
-    return relationship;
-}
-
-JsonAPI.appendAttributesToRelationships = function(relationships, includes){
-    // Loop through each relationship
-    for(var type in relationships){
-        // is data an instance or array
-        if(Array.isArray(relationships[type].data)){
-            relationships[type].data = relationships[type].data.map((relationship) => {
-                return this.appendAttributesToRelationship(relationship, includes);
-            });
-        }else{
-            relationships[type].data = this.appendAttributesToRelationship(relationships[type].data, includes);
-        }
+    if(Array.isArray(this._jsonapi.data)){
+      data = data.map(function(d){ return new ResourceObject(d); });
+    }else{
+      data = new ResourceObject(data);
     }
 
-    return relationships;
-}
+    return data;
+  }
 
-JsonAPI.findIncluded = function(includes, type, id){
-    for(let x in includes){
-        if(includes[x].type == type && includes[x].id == id){
-            return includes[x];
-        }
+  this.getIncluded = function() {
+    return new Included(this._jsonapi.included);
+  }
+
+  this.flatten = function() {
+    let data = this.getDataAsResourceObjects();
+
+    if(Array.isArray(data)){
+      return data.map(function(res){
+        return res.flatten( this.getIncluded() )
+      }.bind(this));
+    }else{
+      return data.flatten(this.getIncluded());
     }
+  }
 }
 
-JsonAPI.normalize = function(entity, includes) {
-    // for each entities relationships
-    // 1) hydrate with attributes
-    let hydrated_relationships = this.appendAttributesToRelationships(entity.relationships, includes);
-
-    // 2) flatten relationships
-    let flatten_relationships = {};
-    for(let type in hydrated_relationships){
-      let data = hydrated_relationships[type].data;
-      if(Array.isArray(data)){
-        data = data.map(this.flattenAttributes)
-      }else{
-        data = this.flattenAttributes(data)
-      }
-
-      flatten_relationships[type] = data;
-    }
-
-    // Append relationships to entities
-    let normalized = Object.assign(this.flattenAttributes(entity), flatten_relationships)
-
-    return normalized;
-}
-
-module.exports = JsonAPI
+module.exports = JsonApi;

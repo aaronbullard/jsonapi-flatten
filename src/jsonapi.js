@@ -3,13 +3,15 @@ const Included = require('./Included.js');
 
 function JsonApi(obj) {
 
-  this._jsonapi = obj;
+  var _jsonapi = obj;
 
-  this.getDataAsResourceObjects = function() {
-    let data = this._jsonapi.data;
+  var _included = null;
 
-    if(Array.isArray(this._jsonapi.data)){
-      data = data.map(function(d){ return new ResourceObject(d); });
+  var _getDataAsResourceObjects = () => {
+    let data = _jsonapi.data;
+
+    if(Array.isArray(_jsonapi.data)){
+      data = data.map( d => new ResourceObject(d));
     }else{
       data = new ResourceObject(data);
     }
@@ -17,20 +19,26 @@ function JsonApi(obj) {
     return data;
   }
 
-  this.getIncluded = function() {
-    return new Included(this._jsonapi.included);
+  var _getIncluded = () => {
+    if(!_included){
+      _included = new Included(_jsonapi.included);
+    }
+
+    return _included;
   }
 
-  this.flatten = function() {
-    let data = this.getDataAsResourceObjects();
+  var flatten = () => {
+    let data = _getDataAsResourceObjects();
 
     if(Array.isArray(data)){
-      return data.map(function(res){
-        return res.flatten( this.getIncluded() )
-      }.bind(this));
+      return data.map(res => res.flatten( _getIncluded() ));
     }else{
-      return data.flatten(this.getIncluded());
+      return data.flatten( _getIncluded() );
     }
+  }
+
+  return {
+    flatten: flatten
   }
 }
 

@@ -1,23 +1,28 @@
 function ResourceObjectIdentifier(obj) {
 
-  this._identifier = obj;
+  var _identifier = obj;
 
-  this.getType = function() {
-    return this._identifier.type;
-  }
+  var getType = () => _identifier.type;
 
-  this.getId = function() {
-    return this._identifier.id;
-  }
+  var getId = () => _identifier.id;
 
-  this.flatten = function(included) {
+  var getIdentifier = () => _identifier;
+
+  var flatten = (included) => {
     try{
-      return included.findResourceObject(this.getType(), this.getId())
+      return included.findResourceObject(getType(), getId())
                      .flatten(included);
     }catch(e){
-      return this._identifier;
+      return _identifier;
     }
   }
+
+  return {
+    getType: getType,
+    getId: getId,
+    flatten: flatten
+  }
 }
+
 
 module.exports = ResourceObjectIdentifier;

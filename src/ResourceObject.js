@@ -1,29 +1,23 @@
 const ResourceObjectIdentifier = require('./ResourceObjectIdentifier.js')
 
-function ResourceObject(resobj) {
+function ResourceObject(obj) {
 
-  this._resource = resobj;
+  var _resource = obj;
 
-  this.getType = function() {
-    return this._resource.type;
-  }
+  var getType = () => _resource.type;
 
-  this.getId = function(){
-    return this._resource.id;
-  }
+  var getId = () => _resource.id;
 
-  this.getAttributes = function() {
-    return this._resource.attributes;
-  }
+  var _getAttributes = () => _resource.attributes;
 
-  this.getRelationships = function() {
+  var _getRelationships = () => {
     let relationships = {};
 
-    for(var type in this._resource.relationships){
-      let data = this._resource.relationships[type].data;
+    for(var type in _resource.relationships){
+      let data = _resource.relationships[type].data;
 
       if(Array.isArray(data)){
-        data = data.map(function(relation){ return new ResourceObjectIdentifier(relation);  })
+        data = data.map((relation) => new ResourceObjectIdentifier(relation) )
       }else{
         data = new ResourceObjectIdentifier(data);
       }
@@ -34,19 +28,39 @@ function ResourceObject(resobj) {
     return relationships;
   }
 
-  this.flatten = function(included) {
-    let flat = Object.assign({_id: this.getId(), _type: this.getType()}, this.getAttributes());
+  var getLinks = () => {
+    return _resource.hasOwnProperty('links') ? _resource.links : {};
+  }
+
+  var getResourceObjectIdentifier = () => {
+    return new ResourceObjectIdentifier({
+      type: getType(),
+      id: getId()
+    })
+  }
+
+  var flatten = (included) => {
+    let flat = Object.assign({_id: getId(), _type: getType()}, _getAttributes());
+    let relationships = _getRelationships();
 
     // add relationships
-    let relationships = this.getRelationships();
     for(var type in relationships){
       flat[type] = Array.isArray(relationships[type])
-                    ? relationships[type].map((roi) => roi.flatten(included))
+                    ? relationships[type].map(roi => roi.flatten(included))
                     : relationships[type].flatten(included);
     }
 
     return flat;
   }
+
+  return {
+    getType: getType,
+    getId: getId,
+    getResourceObjectIdentifier: getResourceObjectIdentifier,
+    getLinks: getLinks,
+    flatten: flatten
+  }
 }
+
 
 module.exports = ResourceObject;

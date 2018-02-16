@@ -1,0 +1,46 @@
+{
+  "data": [{
+    "type": "articles",
+    "id": "1",
+    "attributes": {
+      "title": "JSON API paints my bikeshed!"
+    },
+    "relationships": {
+      "author": {
+        "links": {
+          "self": "http://example.com/articles/1/relationships/author",
+          "related": "http://example.com/articles/1/author"
+        },
+        "data": { "type": "people", "id": "1" }
+      }
+    }
+  }],
+  "included": [
+    {
+      "type": "people",
+      "id": "1",
+      "attributes": {
+        "first-name": "Aaron",
+        "last-name": "Bullard",
+        "twitter": "jab"
+      },
+      "relationships": {
+        "articles": {
+          "data": [{"type": "articles", "id": "1"}]
+        }
+      }
+    },
+    {
+      "type": "articles",
+      "id": "1",
+      "attributes": {
+        "title": "JSON API paints my bikeshed!"
+      },
+      "relationships": {
+        "author": {
+          "data": {"type": "people", "id": "1"}
+        }
+      }
+    }
+  ]
+}

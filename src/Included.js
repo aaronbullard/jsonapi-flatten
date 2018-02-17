@@ -29,11 +29,13 @@ function Included(arr) {
   }
 
   var findResourceObject = (type, id) => {
-    return _cacheFindOrCreate(_getKey(type, id), () => {
+    let object = _cacheFindOrCreate(_getKey(type, id), () => {
       return _getIncluded().find((resource) => {
         return resource.getType() == type && resource.getId() == id;
       });
     });
+
+    return typeof object == "undefined" ? null : object;
   }
 
   return {

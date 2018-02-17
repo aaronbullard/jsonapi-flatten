@@ -30,6 +30,7 @@ describe('JsonApi', () => {
     let flatten = jsonapi.flatten();
 
     assertHasProperties(flatten[0], ['_id', '_type', 'title', 'author', 'comments']);
+    assertHasProperties(flatten[0].author, ['_id', '_type'])
   })
 
   // it.only('prevents recursion', () => {

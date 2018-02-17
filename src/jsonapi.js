@@ -31,7 +31,7 @@ function JsonApi(obj) {
     let data = _getDataAsResourceObjects();
 
     if(Array.isArray(data)){
-      return data.map(res => res.flatten( _getIncluded() ));
+      return data.map(resObj => resObj.flatten( _getIncluded() ));
     }else{
       return data.flatten( _getIncluded() );
     }

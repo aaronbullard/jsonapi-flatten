@@ -9,12 +9,11 @@ function ResourceObjectIdentifier(obj) {
   var getIdentifier = () => _identifier;
 
   var flatten = (included) => {
-    try{
-      return included.findResourceObject(getType(), getId())
-                     .flatten(included);
-    }catch(e){
-      return _identifier;
-    }
+    let object = included.findResourceObject(getType(), getId());
+
+    return object == null
+                ? {_type: getType(), _id: getId()}
+                : object.flatten(included);
   }
 
   return {

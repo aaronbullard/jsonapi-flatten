@@ -1,18 +1,18 @@
-function ResourceObjectIdentifier(obj) {
+function ResourceObjectIdentifier(obj, parent) {
 
   var _identifier = obj;
+
+  var _parent = parent;
 
   var getType = () => _identifier.type;
 
   var getId = () => _identifier.id;
 
-  var getIdentifier = () => _identifier;
-
   var flatten = (included) => {
-    let object = included.findResourceObject(getType(), getId());
+    let object = included.findResourceObject(getType(), getId(), _parent);
 
     return object == null
-                ? {_type: getType(), _id: getId()}
+                ? {_id: getId(), _type: getType()}
                 : object.flatten(included);
   }
 

@@ -1,5 +1,5 @@
 {
-  "data": [{
+  "data": {
     "type": "articles",
     "id": "1",
     "attributes": {
@@ -14,7 +14,7 @@
         "data": { "type": "people", "id": "1" }
       }
     }
-  }],
+  },
   "included": [
     {
       "type": "people",

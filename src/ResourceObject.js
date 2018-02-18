@@ -17,9 +17,9 @@ function ResourceObject(obj) {
       let data = _resource.relationships[type].data;
 
       if(Array.isArray(data)){
-        data = data.map((relation) => new ResourceObjectIdentifier(relation) )
+        data = data.map((relation) => new ResourceObjectIdentifier(relation, getResourceObjectIdentifier()) )
       }else{
-        data = new ResourceObjectIdentifier(data);
+        data = new ResourceObjectIdentifier(data, getResourceObjectIdentifier());
       }
 
       relationships[type] = data;

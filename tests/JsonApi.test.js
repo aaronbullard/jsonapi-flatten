@@ -33,10 +33,14 @@ describe('JsonApi', () => {
     assertHasProperties(flatten[0].author, ['_id', '_type'])
   })
 
-  // it.only('prevents recursion', () => {
-  //   let jsonapi = new JsonApi(recursive);
-  //   // console.log(jsonapi.flatten()[0].comments);
-  //   console.log(JSON.stringify(jsonapi.flatten()));
-  // })
+  it('prevents recursion', () => {
+    let jsonapi = new JsonApi(recursive);
+    let flatten = jsonapi.flatten();
+
+    assertHasProperties(flatten, ['_id', '_type', 'title', 'author']);
+    assertHasProperties(flatten.author, ['_id', '_type', 'first-name', 'last-name', 'twitter', 'articles']);
+    assertHasProperties(flatten.author.articles[0], ['_id', '_type', 'title', 'author'])
+    assertHasProperties(flatten.author.articles[0].author, ['_id', '_type'])
+  })
 
 })

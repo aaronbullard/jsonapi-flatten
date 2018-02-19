@@ -1,6 +1,6 @@
 {
   "name": "jsonapi-flatten",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Converts a JSON API response into a navigatable json object.",
   "main": "src/index.js",
   "scripts": {

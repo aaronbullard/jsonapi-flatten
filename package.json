@@ -8,7 +8,12 @@
     "test": "jest"
   },
   "author": "Aaron Bullard <aaron.bullard77@gamil.com>",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaronbullard/jsonapi-flatten.git"
+  },
+  "homepage": "https://github.com/aaronbullard/jsonapi-flatten#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",

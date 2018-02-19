@@ -1,9 +1,8 @@
-const JsonApi = require('../src/JsonApi.js');
+const {ResourceObject} = require('../src/JsonApi.js');
+const {Included} = require('../src/JsonApi.js');
 const articles = require('./../tests/examples/articles.json');
-const authors = require('./../tests/examples/authors.json');
-const recursive = require('./../tests/examples/recursive-articles.json');
 
-describe('JsonApi', () => {
+describe('ResourceObject', () => {
 
   function assertHasProperties(obj, props){
     props.forEach(function(prop){
@@ -11,36 +10,17 @@ describe('JsonApi', () => {
     })
   }
 
-  it('returns a flatten response', () => {
-    let jsonapi = new JsonApi(articles);
-    let flatten = jsonapi.flatten();
+  it('returns a flatten object', () => {
+    let resource = new ResourceObject(articles.data[0]);
+    let included = new Included(articles.included);
 
-    assertHasProperties(flatten[0], ['_id', '_type', 'title', 'author', 'comments']);
-    assertHasProperties(flatten[0].author, ['_id', '_type', 'first-name', 'last-name', 'twitter']);
-    assertHasProperties(flatten[0].comments[0], ['_id', '_type', 'body', 'author']);
-    assertHasProperties(flatten[0].comments[1], ['_id', '_type', 'body', 'author']);
-    assertHasProperties(flatten[0].comments[1].author, ['_id', '_type', 'first-name', 'last-name', 'twitter']);
-  })
+    let flatten = resource.flatten(included);
 
-  it('returns a flatten response with no included attributes', () => {
-    delete articles.included;
-    expect(articles.hasOwnProperty('included')).toBeFalsy();
-
-    let jsonapi = new JsonApi(articles);
-    let flatten = jsonapi.flatten();
-
-    assertHasProperties(flatten[0], ['_id', '_type', 'title', 'author', 'comments']);
-    assertHasProperties(flatten[0].author, ['_id', '_type'])
-  })
-
-  it('prevents recursion', () => {
-    let jsonapi = new JsonApi(recursive);
-    let flatten = jsonapi.flatten();
-
-    assertHasProperties(flatten, ['_id', '_type', 'title', 'author']);
-    assertHasProperties(flatten.author, ['_id', '_type', 'first-name', 'last-name', 'twitter', 'articles']);
-    assertHasProperties(flatten.author.articles[0], ['_id', '_type', 'title', 'author'])
-    assertHasProperties(flatten.author.articles[0].author, ['_id', '_type'])
+    assertHasProperties(flatten, ['_id', '_type', 'title', 'author', 'comments']);
+    assertHasProperties(flatten.author, ['_id', '_type', 'first-name', 'last-name', 'twitter']);
+    assertHasProperties(flatten.comments[0], ['_id', '_type', 'body', 'author']);
+    assertHasProperties(flatten.comments[1], ['_id', '_type', 'body', 'author']);
+    assertHasProperties(flatten.comments[1].author, ['_id', '_type', 'first-name', 'last-name', 'twitter']);
   })
 
 })

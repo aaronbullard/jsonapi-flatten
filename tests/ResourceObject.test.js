@@ -2,7 +2,7 @@ const ResourceObject = require('../src/ResourceObject.js');
 const Included = require('../src/Included.js');
 const articles = require('./../tests/examples/articles.json');
 
-fdescribe('ResourceObject', () => {
+describe('ResourceObject', () => {
 
   function assertHasProperties(obj, props){
     props.forEach(function(prop){

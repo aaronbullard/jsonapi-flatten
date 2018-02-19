@@ -1,12 +1,13 @@
 {
-  "name": "jsonapi",
+  "name": "jsonapi-flatten",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Converts a JSON API response into a navigatable json object.",
+  "main": "src/index.js",
   "scripts": {
+    "build": "npx babel src --out-dir dist",
     "test": "jest"
   },
-  "author": "",
+  "author": "Aaron Bullard <aaron.bullard77@gamil.com>",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -26,24 +26,16 @@ export default class ResourceObject
     return this._resource.relationships;
   }
 
-  getResourceObjectIdentifier () {
-    return new ResourceObjectIdentifier({
-      type: this.getType(),
-      id: this.getId()
-    })
-  }
-
   _decorateRelationshipsAsResourceObjectIdentifiers (relationships) {
     let result = {};
 
     for(var type in relationships){
       let data = relationships[type].data;
-      let parent = this.getResourceObjectIdentifier();
 
       if(Array.isArray(data)){
-        data = data.map((relation) => new ResourceObjectIdentifier(relation, parent) )
+        data = data.map((relation) => new ResourceObjectIdentifier(relation, this) )
       }else{
-        data = new ResourceObjectIdentifier(data, parent);
+        data = new ResourceObjectIdentifier(data, this);
       }
 
       result[type] = data;

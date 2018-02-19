@@ -47,37 +47,24 @@ var ResourceObject = function () {
       return this._resource.relationships;
     }
   }, {
-    key: 'getResourceObjectIdentifier',
-    value: function getResourceObjectIdentifier() {
-      return new _ResourceObjectIdentifier2.default({
-        type: this.getType(),
-        id: this.getId()
-      });
-    }
-  }, {
     key: '_decorateRelationshipsAsResourceObjectIdentifiers',
     value: function _decorateRelationshipsAsResourceObjectIdentifiers(relationships) {
       var _this = this;
 
       var result = {};
 
-      var _loop = function _loop() {
+      for (var type in relationships) {
         var data = relationships[type].data;
-        var parent = _this.getResourceObjectIdentifier();
 
         if (Array.isArray(data)) {
           data = data.map(function (relation) {
-            return new _ResourceObjectIdentifier2.default(relation, parent);
+            return new _ResourceObjectIdentifier2.default(relation, _this);
           });
         } else {
-          data = new _ResourceObjectIdentifier2.default(data, parent);
+          data = new _ResourceObjectIdentifier2.default(data, this);
         }
 
         result[type] = data;
-      };
-
-      for (var type in relationships) {
-        _loop();
       }
 
       return result;

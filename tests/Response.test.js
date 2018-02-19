@@ -1,7 +1,7 @@
-const Response = require('../src/Response.js');
-const articles = require('./../tests/examples/articles.json');
-const authors = require('./../tests/examples/authors.json');
-const recursive = require('./../tests/examples/recursive-articles.json');
+import Response from '../src/Response.js'
+import articles from './examples/articles.json'
+import authors from './examples/authors.json'
+import recursive from './examples/recursive-articles.json'
 
 describe('Response', () => {
 

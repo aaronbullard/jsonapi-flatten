@@ -1,47 +1,66 @@
-const ResourceObjectIdentifier = require('./ResourceObjectIdentifier.js')
+import ResourceObjectIdentifier from './ResourceObjectIdentifier.js'
 
-function ResourceObject(obj) {
-
-  var _resource = obj;
-
-  var getType = () => _resource.type;
-
-  var getId = () => _resource.id;
-
-  var _getAttributes = () => _resource.attributes;
-
-  var _getRelationships = () => {
-    let relationships = {};
-
-    for(var type in _resource.relationships){
-      let data = _resource.relationships[type].data;
-
-      if(Array.isArray(data)){
-        data = data.map((relation) => new ResourceObjectIdentifier(relation, getResourceObjectIdentifier()) )
-      }else{
-        data = new ResourceObjectIdentifier(data, getResourceObjectIdentifier());
-      }
-
-      relationships[type] = data;
-    }
-
-    return relationships;
+export default class ResourceObject
+{
+  constructor (resource) {
+    this._resource = resource;
   }
 
-  var getLinks = () => {
-    return _resource.hasOwnProperty('links') ? _resource.links : {};
+  getType () {
+    return this._resource.type;
   }
 
-  var getResourceObjectIdentifier = () => {
+  getId () {
+    return this._resource.id;
+  }
+
+  getLinks () {
+    return this._resource.hasOwnProperty('links') ? this._resource.links : {};
+  }
+
+  getAttributes () {
+    return this._resource.attributes;
+  }
+
+  getRelationships () {
+    return this._resource.relationships;
+  }
+
+  getResourceObjectIdentifier () {
     return new ResourceObjectIdentifier({
-      type: getType(),
-      id: getId()
+      type: this.getType(),
+      id: this.getId()
     })
   }
 
-  var flatten = (included) => {
-    let flat = Object.assign({_id: getId(), _type: getType()}, _getAttributes());
-    let relationships = _getRelationships();
+  _decorateRelationshipsAsResourceObjectIdentifiers (relationships) {
+    let result = {};
+
+    for(var type in relationships){
+      let data = relationships[type].data;
+      let parent = this.getResourceObjectIdentifier();
+
+      if(Array.isArray(data)){
+        data = data.map((relation) => new ResourceObjectIdentifier(relation, parent) )
+      }else{
+        data = new ResourceObjectIdentifier(data, parent);
+      }
+
+      result[type] = data;
+    }
+
+    return result;
+  }
+
+  flatten (included) {
+    // Create new object with _id, _type, {...attributes}
+    let flat = Object.assign(
+      {_id: this.getId(), _type: this.getType()},
+      this.getAttributes()
+    );
+
+    // Get relationships decorated as
+    let relationships = this._decorateRelationshipsAsResourceObjectIdentifiers(this.getRelationships());
 
     // add relationships
     for(var type in relationships){
@@ -53,14 +72,4 @@ function ResourceObject(obj) {
     return flat;
   }
 
-  return {
-    getType: getType,
-    getId: getId,
-    getResourceObjectIdentifier: getResourceObjectIdentifier,
-    getLinks: getLinks,
-    flatten: flatten
-  }
 }
-
-
-module.exports = ResourceObject;

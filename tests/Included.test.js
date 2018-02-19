@@ -1,5 +1,6 @@
-const {Included, ResourceObject} = require('../src/JsonApi.js');
-const articles = require('./../tests/examples/articles.json');
+import Included from '../src/Included.js'
+import ResourceObject from '../src/ResourceObject.js'
+import articles from './examples/articles.json'
 
 describe('Included', () => {
 

@@ -1,6 +1,6 @@
-const ResourceObject = require('../src/ResourceObject.js');
-const Included = require('../src/Included.js');
-const articles = require('./../tests/examples/articles.json');
+import Included from '../src/Included.js'
+import ResourceObject from '../src/ResourceObject.js'
+import articles from './examples/articles.json'
 
 describe('ResourceObject', () => {
 

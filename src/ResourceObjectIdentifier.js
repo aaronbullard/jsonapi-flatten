@@ -1,27 +1,23 @@
-function ResourceObjectIdentifier(obj, parent) {
+export default class ResourceObjectIdentifier
+{
+    constructor(obj, parent) {
+      this._identifier = obj;
+      this._parent = parent;
+    }
 
-  var _identifier = obj;
+    getType () {
+      return this._identifier.type;
+    }
 
-  var _parent = parent;
+    getId () {
+      return this._identifier.id;
+    }
 
-  var getType = () => _identifier.type;
+    flatten(included) {
+      let object = included.findResourceObject(this.getType(), this.getId(), this._parent);
 
-  var getId = () => _identifier.id;
-
-  var flatten = (included) => {
-    let object = included.findResourceObject(getType(), getId(), _parent);
-
-    return object == null
-                ? {_id: getId(), _type: getType()}
-                : object.flatten(included);
-  }
-
-  return {
-    getType: getType,
-    getId: getId,
-    flatten: flatten
-  }
+      return object == null
+                  ? {_id: this.getId(), _type: this.getType()}
+                  : object.flatten(included);
+    }
 }
-
-
-module.exports = ResourceObjectIdentifier;

@@ -1,39 +1,37 @@
-const ResourceObject = require('./ResourceObject.js');
+import ResourceObject from './ResourceObject.js'
 
-function Included(arr) {
+export default class Included
+{
+  constructor (arr) {
+    this._included = arr || [];
 
-  var _included = arr || [];
+    this._history = {};
 
-  var _history = {};
+    this._index = this._included.reduce((mapping, obj) => {
+      mapping[this._getKey(obj.type, obj.id)] = new ResourceObject(obj);
+      return mapping;
+    }, {});
+  }
 
-  var _getKey = (type, id) => (`${type}-${id}`);
+  _getKey (type, id) {
+    return (`${type}-${id}`);
+  }
 
-  var _index = _included.reduce((mapping, obj) => {
-    mapping[_getKey(obj.type, obj.id)] = new ResourceObject(obj);
-    return mapping;
-  }, {});
-
-  var findResourceObject = (type, id, parent) => {
-    var key = _getKey(type, id);
+  findResourceObject (type, id, parent) {
+    var key = this._getKey(type, id);
 
     // Prevents infinite recursive loops
     if(parent){
-      let parentKey = _getKey(parent.getType(), parent.getId());
+      let parentKey = this._getKey(parent.getType(), parent.getId());
       let historyKey = `${parentKey} => ${key}`;
       // has parent requested child before?
-      if(_history.hasOwnProperty(historyKey)){
+      if(this._history.hasOwnProperty(historyKey)){
         return null;
       }else{
-        _history[historyKey] = true;
+        this._history[historyKey] = true;
       }
     }
 
-    return _index.hasOwnProperty(key) ? _index[key] : null;
-  }
-
-  return {
-    findResourceObject: findResourceObject
+    return this._index.hasOwnProperty(key) ? this._index[key] : null;
   }
 }
-
-module.exports = Included;

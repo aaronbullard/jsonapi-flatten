@@ -1,16 +1,17 @@
-const ResourceObject = require('./ResourceObject.js');
-const Included = require('./Included.js');
+import ResourceObject from './ResourceObject.js'
+import Included from './Included.js'
 
-function JsonApi(obj) {
+export default class Response {
 
-  var _jsonapi = obj;
+  constructor (response) {
+    this._jsonapi = response;
+    this._included = new Included(this._jsonapi.included);
+  }
 
-  var _included = null;
+  _getDataAsResourceObjects () {
+    let data = this._jsonapi.data;
 
-  var _getDataAsResourceObjects = () => {
-    let data = _jsonapi.data;
-
-    if(Array.isArray(_jsonapi.data)){
+    if(Array.isArray(this._jsonapi.data)){
       data = data.map( d => new ResourceObject(d));
     }else{
       data = new ResourceObject(data);
@@ -19,27 +20,13 @@ function JsonApi(obj) {
     return data;
   }
 
-  var _getIncluded = () => {
-    if(!_included){
-      _included = new Included(_jsonapi.included);
-    }
-
-    return _included;
-  }
-
-  var flatten = () => {
-    let data = _getDataAsResourceObjects();
+  flatten () {
+    let data = this._getDataAsResourceObjects();
 
     if(Array.isArray(data)){
-      return data.map(resObj => resObj.flatten( _getIncluded() ));
+      return data.map(resObj => resObj.flatten( this._included ));
     }else{
-      return data.flatten( _getIncluded() );
+      return data.flatten( this._included );
     }
   }
-
-  return {
-    flatten: flatten
-  }
 }
-
-module.exports = JsonApi;

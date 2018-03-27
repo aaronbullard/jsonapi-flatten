@@ -1,0 +1,190 @@
+{
+    "data": [
+        {
+            "type": "products",
+            "id": "1",
+            "attributes": {
+                "name": "Deep Tissue",
+                "type": "service",
+                "duration": 60,
+                "price": 60,
+                "is_outcall": false,
+                "has_giftcard": false
+            },
+            "relationships": {
+                "category": {
+                    "data": {
+                        "type": "categories",
+                        "id": "1"
+                    }
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "2",
+            "attributes": {
+                "name": "Deep Tissue",
+                "type": "service",
+                "duration": 30,
+                "price": 30,
+                "category": "1",
+                "is_outcall": false,
+                "has_giftcard": true
+            },
+            "relationships": {
+                "category": {
+                    "data": {
+                        "type": "categories",
+                        "id": "1"
+                    }
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "3",
+            "attributes": {
+                "name": "Natural Oil",
+                "type": "add-on",
+                "duration": null,
+                "price": 15,
+                "is_outcall": true,
+                "has_giftcard": true
+            },
+            "relationships": {
+                "category": {
+                    "data": null
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "4",
+            "attributes": {
+                "name": "Sports Massage",
+                "type": "service",
+                "duration": 30,
+                "price": 30,
+                "category": "2",
+                "is_outcall": false,
+                "has_giftcard": false
+            },
+            "relationships": {
+                "category": {
+                    "data": {
+                        "type": "categories",
+                        "id": "2"
+                    }
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "5",
+            "attributes": {
+                "name": "Sports Massage Outcall",
+                "type": "service",
+                "duration": 30,
+                "price": 30,
+                "is_outcall": true,
+                "has_giftcard": true
+            },
+            "relationships": {
+                "category": {
+                    "data": {
+                        "type": "categories",
+                        "id": "2"
+                    }
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "6",
+            "attributes": {
+                "name": "Chair Massage Test",
+                "type": "service",
+                "duration": 30,
+                "price": 30,
+                "is_outcall": false,
+                "has_giftcard": false
+            },
+            "relationships": {
+                "category": {
+                    "data": {
+                        "type": "categories",
+                        "id": "3"
+                    }
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "7",
+            "attributes": {
+                "name": "Swedish Test",
+                "type": "service",
+                "duration": 30,
+                "price": 30,
+                "is_outcall": false,
+                "has_giftcard": false
+            },
+            "relationships": {
+                "category": {
+                    "data": {
+                        "type": "categories",
+                        "id": "4"
+                    }
+                }
+            }
+        },
+        {
+            "type": "products",
+            "id": "8",
+            "attributes": {
+                "name": "50$ Gift Certificate",
+                "type": "giftcertificate",
+                "duration": 30,
+                "price": 30,
+                "is_outcall": false,
+                "has_giftcard": false
+            },
+            "relationships": {
+                "category": {
+                    "data": null
+                }
+            }
+        }
+    ],
+    "included": [
+        {
+            "type": "categories",
+            "id": "1",
+            "attributes": {
+                "name": "Deep Tissue"
+            }
+        },
+        {
+            "type": "categories",
+            "id": "2",
+            "attributes": {
+                "name": "Sports Massage"
+            }
+        },
+        {
+            "type": "categories",
+            "id": "3",
+            "attributes": {
+                "name": "Chair Massage"
+            }
+        },
+        {
+            "type": "categories",
+            "id": "4",
+            "attributes": {
+                "name": "Swedish"
+            }
+        }
+    ]
+}

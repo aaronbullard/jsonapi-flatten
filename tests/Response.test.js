@@ -2,6 +2,7 @@ import Response from '../src/Response.js'
 import articles from './examples/articles.json'
 import authors from './examples/authors.json'
 import recursive from './examples/recursive-articles.json'
+import products from './examples/products.json'
 
 describe('Response', () => {
 
@@ -41,6 +42,13 @@ describe('Response', () => {
     assertHasProperties(flatten.author, ['_id', '_type', 'first-name', 'last-name', 'twitter', 'articles']);
     assertHasProperties(flatten.author.articles[0], ['_id', '_type', 'title', 'author'])
     assertHasProperties(flatten.author.articles[0].author, ['_id', '_type'])
+  })
+
+  it('handles a null relationship', () => {
+    let jsonapi = new Response(products);
+    let flatten = jsonapi.flatten();
+
+    expect(flatten[2].category).toEqual(null);
   })
 
 })

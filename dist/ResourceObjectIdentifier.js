@@ -29,9 +29,13 @@ var ResourceObjectIdentifier = function () {
   }, {
     key: "flatten",
     value: function flatten(included) {
-      var object = included.findResourceObject(this.getType(), this.getId(), this._parent);
+      try {
+        var object = included.findResourceObject(this.getType(), this.getId(), this._parent);
 
-      return object == null ? { _id: this.getId(), _type: this.getType() } : object.flatten(included);
+        return object == null ? { _id: this.getId(), _type: this.getType() } : object.flatten(included);
+      } catch (e) {
+        return null;
+      }
     }
   }]);
 

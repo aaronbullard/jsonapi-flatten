@@ -1,6 +1,6 @@
 {
   "name": "jsonapi-flatten",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "jsonapi",
     "restful",
@@ -21,11 +21,13 @@
   },
   "homepage": "https://github.com/aaronbullard/jsonapi-flatten#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-jest": "^23.6.0",
-    "babel-preset-env": "^1.7.0",
-    "jest": "^23.6.0",
+    "babel-jest": "^24.5.0",
+    "jest": "^24.5.0",
     "regenerator-runtime": "^0.11.1"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2"
   }
 }

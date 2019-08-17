@@ -6,25 +6,25 @@ Object.defineProperty(exports, "__esModule", {
 Object.defineProperty(exports, "Response", {
   enumerable: true,
   get: function get() {
-    return _Response.default;
+    return _Response["default"];
   }
 });
 Object.defineProperty(exports, "ResourceObject", {
   enumerable: true,
   get: function get() {
-    return _ResourceObject.default;
+    return _ResourceObject["default"];
   }
 });
 Object.defineProperty(exports, "ResourceObjectIdentifier", {
   enumerable: true,
   get: function get() {
-    return _ResourceObjectIdentifier.default;
+    return _ResourceObjectIdentifier["default"];
   }
 });
 Object.defineProperty(exports, "Included", {
   enumerable: true,
   get: function get() {
-    return _Included.default;
+    return _Included["default"];
   }
 });
 
@@ -36,4 +36,4 @@ var _ResourceObjectIdentifier = _interopRequireDefault(require("./ResourceObject
 
 var _Included = _interopRequireDefault(require("./Included.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }

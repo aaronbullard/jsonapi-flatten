@@ -1,6 +1,6 @@
 {
   "name": "jsonapi-flatten",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "keywords": [
     "jsonapi",
     "restful",
@@ -8,7 +8,7 @@
     "api"
   ],
   "description": "Converts a JSON API response into a navigatable json object.",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "npx babel src --out-dir dist",
     "test": "jest"
@@ -22,12 +22,10 @@
   "homepage": "https://github.com/aaronbullard/jsonapi-flatten#readme",
   "devDependencies": {
     "babel-jest": "^24.5.0",
-    "jest": "^24.5.0",
-    "regenerator-runtime": "^0.11.1"
-  },
-  "dependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2"
+    "@babel/preset-env": "^7.4.2",
+    "jest": "^24.5.0",
+    "regenerator-runtime": "^0.11.1"
   }
 }

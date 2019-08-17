@@ -3,11 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _ResourceObject = _interopRequireDefault(require("./ResourceObject.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -26,7 +26,7 @@ function () {
     this._included = arr || [];
     this._history = {};
     this._index = this._included.reduce(function (mapping, obj) {
-      mapping[_this._getKey(obj.type, obj.id)] = new _ResourceObject.default(obj);
+      mapping[_this._getKey(obj.type, obj.id)] = new _ResourceObject["default"](obj);
       return mapping;
     }, {});
   }
@@ -61,4 +61,4 @@ function () {
   return Included;
 }();
 
-exports.default = Included;
+exports["default"] = Included;

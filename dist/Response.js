@@ -3,13 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _ResourceObject = _interopRequireDefault(require("./ResourceObject.js"));
 
 var _Included = _interopRequireDefault(require("./Included.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -24,7 +24,7 @@ function () {
     _classCallCheck(this, Response);
 
     this._jsonapi = response;
-    this._included = new _Included.default(this._jsonapi.included);
+    this._included = new _Included["default"](this._jsonapi.included);
   }
 
   _createClass(Response, [{
@@ -34,10 +34,10 @@ function () {
 
       if (Array.isArray(this._jsonapi.data)) {
         data = data.map(function (d) {
-          return new _ResourceObject.default(d);
+          return new _ResourceObject["default"](d);
         });
       } else {
-        data = new _ResourceObject.default(data);
+        data = new _ResourceObject["default"](data);
       }
 
       return data;
@@ -62,4 +62,4 @@ function () {
   return Response;
 }();
 
-exports.default = Response;
+exports["default"] = Response;
